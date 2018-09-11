@@ -2,13 +2,18 @@ import java.util.Scanner;
 import java.text.DecimalFormat;
 
 public class CedarPointCalc{
-	public static final double schoolBusCostPerPerson = 1300.42 / 44; //school buses are $1300.42 per 44 person bus
-	public static final double charterBusCostPerPerson = 1738.92 /55; //charter buses are $1738.92 per 55 person bus
+	public static final double schoolBusCostPerBus = 1300.42;
+	public static final double charterBusCostPerBus = 1738.92;
+	public static final double numberOfPeopleOnSchoolBus = 44.0; //made double in order to allow number of buses to round up
+	public static final double numberOfPeopleOnCharterBus = 55.0; //made double in order to allow number of buses to round up
 	public static final double fallTicketPrice = 39.00;
 	public static final double springTicketPrice = 42.00;
+	public static final double foodAllowance = 25.00;
+	public static final int numOfStudentsForFreeTicket = 15;
+	public static final int numOfStudentsPerChaperone = 4;
 	public static void main(String[] args){
-		//Declare variables
-		int numOfStudents, numOfChaperones;
+		//Declare instance variables
+		int numOfStudents, numOfChaperones, numOfFreeTickets, numOfSchoolBuses, numOfCharterBuses;
 		DecimalFormat money = new DecimalFormat("$.00");
 		double fallCost, springCost, charterBusCost, schoolBusCost, foodCost;
 		Scanner scanner = new Scanner(System.in);
@@ -17,20 +22,29 @@ public class CedarPointCalc{
 		System.out.print("Students attending: ");
 		numOfStudents = scanner.nextInt();
 
+		//Calculate number of students who will get in free
+		numOfFreeTickets = numOfStudents / numOfStudentsForFreeTicket;
+
 		//Calculate number of chaperones needed and print
-		numOfChaperones = numOfStudents / 4;
+		numOfChaperones = numOfStudents / numOfStudentsPerChaperone;
 		System.out.println(numOfChaperones + " chaperones are needed.");
 
 		//Calculate fall and spring admission costs
 		fallCost = (numOfStudents + numOfChaperones) * fallTicketPrice;
 		springCost = (numOfStudents + numOfChaperones) * springTicketPrice;
 
+		//Calculate cost for fall and spring with free ticket deductions
+		fallCost = fallCost - (numOfFreeTickets * fallTicketPrice);
+		springCost = springCost - (numOfFreeTickets * springTicketPrice);
+
 		//Calculate cost of transportation with school and charter bus
-		schoolBusCost = (numOfStudents + numOfChaperones) * schoolBusCostPerPerson;
-		charterBusCost = (numOfStudents + numOfChaperones) * charterBusCostPerPerson;
+		numOfSchoolBuses = (int) Math.ceil((numOfStudents + numOfChaperones) / numberOfPeopleOnSchoolBus);
+		numOfCharterBuses = (int) Math.ceil((numOfStudents + numOfChaperones) / numberOfPeopleOnCharterBus);
+		schoolBusCost = numOfSchoolBuses * schoolBusCostPerBus;
+		charterBusCost = numOfCharterBuses * charterBusCostPerBus;
 
 		//Total cost for food allowance and print
-		foodCost = (numOfStudents + numOfChaperones) * 25.00;
+		foodCost = (numOfStudents + numOfChaperones) * foodAllowance;
 		System.out.println("Food will cost $" + foodCost + "0.");
 
 		//Total trip cost for all four possibilities
