@@ -2,15 +2,15 @@ import java.util.Scanner;
 import java.text.DecimalFormat;
 
 public class CedarPointCalc{
+	public static final double schoolBusCostPerPerson = 1300.42 / 44; //school buses are $1300.42 per 44 person bus
+	public static final double charterBusCostPerPerson = 1738.92 /55; //charter buses are $1738.92 per 55 person bus
+	public static final double fallTicketPrice = 39.00;
+	public static final double springTicketPrice = 42.00;
 	public static void main(String[] args){
 		//Declare variables
 		int numOfStudents, numOfChaperones;
 		DecimalFormat money = new DecimalFormat("$.00");
 		double fallCost, springCost, charterBusCost, schoolBusCost, foodCost;
-		final double schoolBusCostPerPerson = 1300.42 / 44; //school buses are $1300.42 per 44 person bus
-		final double charterBusCostPerPerson = 1738.92 /55; //charter buses are $1738.92 per 55 person bus
-		final double fallTicketPrice = 39.00;
-		final double springTicketPrice = 42.00;
 		Scanner scanner = new Scanner(System.in);
 
 		//Get inputs
